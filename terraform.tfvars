@@ -40,8 +40,8 @@ allowed_ssh_ips = ["0.0.0.0/0"]  # Replace with your IP for production
 # Add your IAM user ARN here (get it with: aws sts get-caller-identity)
 additional_iam_users = [
   {
-    userarn  = "arn:aws:iam::742674388365:user/cli-user"  # REPLACE THIS
-    username = "cli-user"
+    userarn  = "arn:aws:iam::435976457077:user/eks-cli"  # REPLACE THIS
+    username = "eks-cli"
     groups   = ["system:masters"]
   }
 ]
