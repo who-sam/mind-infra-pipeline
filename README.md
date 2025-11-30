@@ -2,7 +2,7 @@
 
 [![Terraform](https://img.shields.io/badge/Terraform-1.0+-623CE4.svg)](https://www.terraform.io/)
 [![AWS](https://img.shields.io/badge/AWS-EKS-FF9900.svg)](https://aws.amazon.com/eks/)
-[![Kubernetes](https://img.shields.io/badge/Kubernetes-1.31-326CE5.svg)](https://kubernetes.io/)
+[![Kubernetes](https://img.shields.io/badge/Kubernetes-1.34-326CE5.svg)](https://kubernetes.io/)
 
 > Infrastructure as Code for provisioning production-ready AWS EKS clusters with Terraform.
 
@@ -27,7 +27,7 @@ This repository contains Terraform Infrastructure as Code (IaC) for deploying a 
 ### What Gets Deployed
 
 ✅ **VPC** - Multi-AZ networking with public/private subnets  
-✅ **EKS Cluster** - Managed Kubernetes 1.31 control plane  
+✅ **EKS Cluster** - Managed Kubernetes 1.34 control plane  
 ✅ **Node Groups** - Auto-scaling worker nodes (t3.medium)  
 ✅ **IAM** - Secure roles for cluster and nodes  
 ✅ **Security Groups** - Network isolation and access control  
@@ -198,7 +198,7 @@ public_subnet_cidrs  = ["10.0.1.0/24", "10.0.2.0/24"]
 private_subnet_cidrs = ["10.0.11.0/24", "10.0.12.0/24"]
 
 # EKS Configuration
-cluster_version         = "1.31"
+cluster_version         = "1.34"
 node_group_desired_size = 3
 node_group_min_size     = 3
 node_group_max_size     = 6
@@ -271,7 +271,7 @@ single_nat_gateway   = false                            # NAT per AZ
 
 #### EKS Settings
 ```hcl
-cluster_version           = "1.31"          # Kubernetes version
+cluster_version           = "1.34"          # Kubernetes version
 node_group_desired_size   = 3               # Desired nodes
 node_group_min_size       = 3               # Min nodes
 node_group_max_size       = 6               # Max nodes

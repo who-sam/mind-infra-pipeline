@@ -111,7 +111,7 @@ main.tf (root)
 
 ### AWS Services Used
 
-- **EKS** - Managed Kubernetes control plane (v1.31)
+- **EKS** - Managed Kubernetes control plane (v1.34)
 - **VPC** - Virtual Private Cloud networking (10.0.0.0/16)
 - **EC2** - Worker node instances (t2.micro)
 - **IAM** - Identity and access management
@@ -329,7 +329,7 @@ touch modules/new-module/{main.tf,variables.tf,outputs.tf}
 
 ```hcl
 # Current
-kubernetes_version = "1.31"
+kubernetes_version = "1.34"
 
 # To update
 kubernetes_version = "1.32"
@@ -683,7 +683,7 @@ availability_zones = ["eu-west-1a", "eu-west-1c"]
 aws eks describe-addon-versions --region eu-west-1
 
 # Update terraform.tfvars to supported version
-kubernetes_version = "1.31"  # Use supported version
+kubernetes_version = "1.34"  # Use supported version
 ```
 
 ### Debugging Tips
@@ -788,7 +788,7 @@ terraform validate
 - Documented all 4 modules (VPC, IAM, Security Groups, EKS)
 - Added development workflows and conventions
 - Included troubleshooting guide
-- Documented current state: K8s 1.31, Jenkins pipeline with apply commented out
+- Documented current state: K8s 1.34, Jenkins pipeline with apply commented out
 
 ---
 
