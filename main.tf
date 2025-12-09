@@ -51,27 +51,6 @@ terraform {
 }
 
 # ============================================================================
-# PROVIDERS
-# ============================================================================
-
-# Configure base AWS provider
-provider "aws" {
-  region = var.region
-}
-
-# Configure Kubernetes provider (initial - will be reconfigured after EKS cluster creation)
-provider "kubernetes" {
-  config_path = "~/.kube/config"
-}
-
-# Configure Helm provider (initial - will be reconfigured after EKS cluster creation)
-provider "helm" {
-  kubernetes {
-    config_path = "~/.kube/config"
-  }
-}
-
-# ============================================================================
 # MODULES
 # ============================================================================
 
@@ -304,48 +283,6 @@ output "eks_cluster_info" {
     endpoint = module.eks.cluster_endpoint
     version  = module.eks.cluster_version
   }
-}
-
-output "argocd_info" {
-  description = "ArgoCD access information"
-  value = {
-    namespace       = module.argocd.argocd_namespace
-    server_url      = module.argocd.argocd_server_url
-    admin_user      = module.argocd.argocd_admin_user
-  }
-  sensitive = true
-}
-
-output "monitoring_info" {
-  description = "Monitoring stack access information"
-  value = {
-    namespace       = module.monitoring.monitoring_namespace
-    prometheus_url  = module.monitoring.prometheus_url
-    grafana_url     = module.monitoring.grafana_url
-    grafana_user    = module.monitoring.grafana_admin_user
-  }
-}
-
-output "kubectl_config_command" {
-  description = "Command to configure kubectl"
-  value       = "aws eks update-kubeconfig --region ${var.region} --name ${module.eks.cluster_name}"
-}
-
-output "access_services_commands" {
-  description = "Commands to access services"
-  value = <<-EOT
-    # Get ArgoCD URL:
-    kubectl get svc argocd-server -n ${var.argocd_namespace} -o jsonpath='{.status.loadBalancer.ingress[0].hostname}'
-    
-    # Get ArgoCD admin password:
-    kubectl -n ${var.argocd_namespace} get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
-    
-    # Get Grafana URL:
-    kubectl get svc kube-prometheus-stack-grafana -n ${var.monitoring_namespace} -o jsonpath='{.status.loadBalancer.ingress[0].hostname}'
-    
-    # Get Prometheus URL (port-forward):
-    kubectl port-forward -n ${var.monitoring_namespace} svc/kube-prometheus-stack-prometheus 9090:9090
-  EOT
 }
 
 output "vpc_info" {
