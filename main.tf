@@ -139,7 +139,7 @@ module "argocd" {
   ]
 }
 
-# Install Monitoring Stack (Prometheus & Grafana)
+# Monitoring Module
 module "monitoring" {
   source = "./modules/monitoring"
   
@@ -171,56 +171,6 @@ data "aws_eks_cluster" "cluster" {
 
 data "aws_eks_cluster_auth" "cluster" {
   name = module.eks.cluster_name
-}
-
-# ============================================================================
-# RE-CONFIGURED PROVIDERS FOR EKS
-# ============================================================================
-
-# Re-configure Kubernetes provider for EKS cluster
-provider "kubernetes" {
-  alias = "eks"
-  
-  host                   = data.aws_eks_cluster.cluster.endpoint
-  cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority[0].data)
-  token                  = data.aws_eks_cluster_auth.cluster.token
-  
-  exec {
-    api_version = "client.authentication.k8s.io/v1beta1"
-    command     = "aws"
-    args = [
-      "eks",
-      "get-token",
-      "--cluster-name",
-      data.aws_eks_cluster.cluster.name,
-      "--region",
-      var.region
-    ]
-  }
-}
-
-# Re-configure Helm provider for EKS cluster
-provider "helm" {
-  alias = "eks"
-  
-  kubernetes {
-    host                   = data.aws_eks_cluster.cluster.endpoint
-    cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority[0].data)
-    token                  = data.aws_eks_cluster_auth.cluster.token
-    
-    exec {
-      api_version = "client.authentication.k8s.io/v1beta1"
-      command     = "aws"
-      args = [
-        "eks",
-        "get-token",
-        "--cluster-name",
-        data.aws_eks_cluster.cluster.name,
-        "--region",
-        var.region
-      ]
-    }
-  }
 }
 
 # ============================================================================
@@ -261,32 +211,4 @@ resource "kubernetes_config_map_v1_data" "aws_auth" {
   depends_on = [
     module.eks
   ]
-}
-
-# ============================================================================
-# KUBERNETES APPLICATIONS
-# ============================================================================
-
-
-# ============================================================================
-# OUTPUTS
-# ============================================================================
-
-output "eks_cluster_info" {
-  description = "EKS cluster information"
-  value = {
-    name     = module.eks.cluster_name
-    endpoint = module.eks.cluster_endpoint
-    version  = module.eks.cluster_version
-  }
-}
-
-output "vpc_info" {
-  description = "VPC information"
-  value = {
-    vpc_id     = module.vpc.vpc_id
-    vpc_cidr   = module.vpc.vpc_cidr
-    private_subnets = module.vpc.private_subnet_ids
-    public_subnets  = module.vpc.public_subnet_ids
-  }
 }

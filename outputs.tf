@@ -104,3 +104,22 @@ output "argocd_login_command" {
   value = var.enable_argocd ? "argocd login $(kubectl get svc argocd-server -n argocd -o jsonpath='{.status.loadBalancer.ingress[0].hostname}') --username admin --password $(kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath=\"{.data.password}\" | base64 -d)" : null
   sensitive = true
 }
+
+output "eks_cluster_info" {
+  description = "EKS cluster information"
+  value = {
+    name     = module.eks.cluster_name
+    endpoint = module.eks.cluster_endpoint
+    version  = module.eks.cluster_version
+  }
+}
+
+output "vpc_info" {
+  description = "VPC information"
+  value = {
+    vpc_id     = module.vpc.vpc_id
+    vpc_cidr   = module.vpc.vpc_cidr
+    private_subnets = module.vpc.private_subnet_ids
+    public_subnets  = module.vpc.public_subnet_ids
+  }
+}
