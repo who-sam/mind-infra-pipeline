@@ -1,0 +1,407 @@
+{
+  {
+    "title": "MIND Notes Operations",
+    "tags": ["mind", "notes", "operations"],
+    "timezone": "browser",
+    "schemaVersion": 38,
+    "version": 1,
+    "refresh": "30s",
+    "panels": [
+      {
+        "id": 1,
+        "type": "row",
+        "title": "Notes Operations Summary",
+        "gridPos": {"h": 1, "w": 24, "x": 0, "y": 0},
+        "collapsed": false
+      },
+      {
+        "id": 2,
+        "type": "stat",
+        "title": "Notes Created (Total)",
+        "gridPos": {"h": 5, "w": 6, "x": 0, "y": 1},
+        "targets": [
+          {
+            "expr": "mind_notes_created_total",
+            "refId": "A"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {"mode": "palette-classic"},
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {"color": "green", "value": null}
+              ]
+            },
+            "unit": "short"
+          }
+        },
+        "options": {
+          "colorMode": "background",
+          "graphMode": "area",
+          "justifyMode": "center",
+          "textMode": "value_and_name"
+        }
+      },
+      {
+        "id": 3,
+        "type": "stat",
+        "title": "Notes Updated (Total)",
+        "gridPos": {"h": 5, "w": 6, "x": 6, "y": 1},
+        "targets": [
+          {
+            "expr": "mind_notes_updated_total",
+            "refId": "A"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {"mode": "palette-classic"},
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {"color": "blue", "value": null}
+              ]
+            },
+            "unit": "short"
+          }
+        },
+        "options": {
+          "colorMode": "background",
+          "graphMode": "area"
+        }
+      },
+      {
+        "id": 4,
+        "type": "stat",
+        "title": "Notes Deleted (Total)",
+        "gridPos": {"h": 5, "w": 6, "x": 12, "y": 1},
+        "targets": [
+          {
+            "expr": "mind_notes_deleted_total",
+            "refId": "A"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {"mode": "palette-classic"},
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {"color": "red", "value": null}
+              ]
+            },
+            "unit": "short"
+          }
+        },
+        "options": {
+          "colorMode": "background",
+          "graphMode": "area"
+        }
+      },
+      {
+        "id": 5,
+        "type": "stat",
+        "title": "Notes Read (Total)",
+        "gridPos": {"h": 5, "w": 6, "x": 18, "y": 1},
+        "targets": [
+          {
+            "expr": "mind_notes_read_total",
+            "refId": "A"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {"mode": "palette-classic"},
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {"color": "purple", "value": null}
+              ]
+            },
+            "unit": "short"
+          }
+        },
+        "options": {
+          "colorMode": "background",
+          "graphMode": "area"
+        }
+      },
+      {
+        "id": 6,
+        "type": "timeseries",
+        "title": "Notes Creation Rate",
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 6},
+        "targets": [
+          {
+            "expr": "rate(mind_notes_created_total[5m]) * 60",
+            "legendFormat": "Notes/minute",
+            "refId": "A"
+          },
+          {
+            "expr": "rate(mind_notes_created_total[1h]) * 3600",
+            "legendFormat": "Notes/hour",
+            "refId": "B"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "custom": {
+              "drawStyle": "line",
+              "lineInterpolation": "smooth",
+              "fillOpacity": 20,
+              "pointSize": 5
+            },
+            "color": {"mode": "palette-classic"},
+            "unit": "short"
+          }
+        }
+      },
+      {
+        "id": 7,
+        "type": "timeseries",
+        "title": "Notes Modification Rate",
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 6},
+        "targets": [
+          {
+            "expr": "rate(mind_notes_updated_total[5m]) * 60",
+            "legendFormat": "Updates/minute",
+            "refId": "A"
+          },
+          {
+            "expr": "rate(mind_notes_deleted_total[5m]) * 60",
+            "legendFormat": "Deletes/minute",
+            "refId": "B"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "custom": {
+              "drawStyle": "line",
+              "lineInterpolation": "smooth",
+              "fillOpacity": 20,
+              "pointSize": 5
+            },
+            "color": {"mode": "palette-classic"},
+            "unit": "short"
+          }
+        }
+      },
+      {
+        "id": 8,
+        "type": "row",
+        "title": "Star Operations",
+        "gridPos": {"h": 1, "w": 24, "x": 0, "y": 14},
+        "collapsed": false
+      },
+      {
+        "id": 9,
+        "type": "stat",
+        "title": "Notes Starred",
+        "gridPos": {"h": 5, "w": 8, "x": 0, "y": 15},
+        "targets": [
+          {
+            "expr": "mind_notes_starred_total",
+            "refId": "A"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {"mode": "thresholds"},
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {"color": "yellow", "value": null}
+              ]
+            },
+            "unit": "short"
+          }
+        },
+        "options": {
+          "colorMode": "background",
+          "graphMode": "area"
+        }
+      },
+      {
+        "id": 10,
+        "type": "stat",
+        "title": "Notes Unstarred",
+        "gridPos": {"h": 5, "w": 8, "x": 8, "y": 15},
+        "targets": [
+          {
+            "expr": "mind_notes_unstarred_total",
+            "refId": "A"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {"mode": "thresholds"},
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {"color": "grey", "value": null}
+              ]
+            },
+            "unit": "short"
+          }
+        },
+        "options": {
+          "colorMode": "background",
+          "graphMode": "area"
+        }
+      },
+      {
+        "id": 11,
+        "type": "timeseries",
+        "title": "Star Activity Over Time",
+        "gridPos": {"h": 5, "w": 8, "x": 16, "y": 15},
+        "targets": [
+          {
+            "expr": "rate(mind_notes_starred_total[5m])",
+            "legendFormat": "Starred",
+            "refId": "A"
+          },
+          {
+            "expr": "rate(mind_notes_unstarred_total[5m])",
+            "legendFormat": "Unstarred",
+            "refId": "B"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "custom": {
+              "drawStyle": "line",
+              "lineInterpolation": "smooth",
+              "fillOpacity": 30
+            },
+            "color": {"mode": "palette-classic"},
+            "unit": "ops"
+          }
+        }
+      },
+      {
+        "id": 12,
+        "type": "row",
+        "title": "Notes by Category",
+        "gridPos": {"h": 1, "w": 24, "x": 0, "y": 20},
+        "collapsed": false
+      },
+      {
+        "id": 13,
+        "type": "bargauge",
+        "title": "Notes Distribution by Status",
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 21},
+        "targets": [
+          {
+            "expr": "mind_notes_by_status",
+            "legendFormat": "{{status}}",
+            "refId": "A"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {"mode": "palette-classic"},
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {"color": "green", "value": null}
+              ]
+            },
+            "unit": "short"
+          }
+        },
+        "options": {
+          "orientation": "horizontal",
+          "displayMode": "gradient",
+          "showUnfilled": true
+        }
+      },
+      {
+        "id": 14,
+        "type": "bargauge",
+        "title": "Notes Distribution by Color",
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 21},
+        "targets": [
+          {
+            "expr": "mind_notes_by_color",
+            "legendFormat": "{{color}}",
+            "refId": "A"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {"mode": "palette-classic"},
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {"color": "blue", "value": null}
+              ]
+            },
+            "unit": "short"
+          }
+        },
+        "options": {
+          "orientation": "horizontal",
+          "displayMode": "gradient",
+          "showUnfilled": true
+        }
+      },
+      {
+        "id": 15,
+        "type": "row",
+        "title": "Error Analysis",
+        "gridPos": {"h": 1, "w": 24, "x": 0, "y": 29},
+        "collapsed": false
+      },
+      {
+        "id": 16,
+        "type": "timeseries",
+        "title": "Notes Operation Errors",
+        "gridPos": {"h": 8, "w": 24, "x": 0, "y": 30},
+        "targets": [
+          {
+            "expr": "rate(mind_notes_errors_total{operation=\"create\"}[5m])",
+            "legendFormat": "Create Errors",
+            "refId": "A"
+          },
+          {
+            "expr": "rate(mind_notes_errors_total{operation=\"update\"}[5m])",
+            "legendFormat": "Update Errors",
+            "refId": "B"
+          },
+          {
+            "expr": "rate(mind_notes_errors_total{operation=\"delete\"}[5m])",
+            "legendFormat": "Delete Errors",
+            "refId": "C"
+          },
+          {
+            "expr": "rate(mind_notes_errors_total{operation=\"read\"}[5m])",
+            "legendFormat": "Read Errors",
+            "refId": "D"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "custom": {
+              "drawStyle": "line",
+              "lineInterpolation": "smooth",
+              "fillOpacity": 20,
+              "pointSize": 5
+            },
+            "color": {"mode": "palette-classic"},
+            "unit": "ops"
+          }
+        }
+      }
+    ]
+  }
+}

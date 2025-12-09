@@ -65,3 +65,12 @@ tags = {
   ManagedBy   = "Terraform"
   Owner       = "DevOps-Team"
 }
+
+
+# New variables for ArgoCD and Monitoring
+grafana_admin_password = "YourSecurePassword123!"  # CHANGE THIS!
+enable_argocd         = true
+enable_monitoring     = true
+argocd_namespace      = "argocd"
+monitoring_namespace  = "monitoring"
+

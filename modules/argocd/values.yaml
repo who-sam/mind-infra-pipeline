@@ -1,0 +1,71 @@
+# modules/argocd/values.yaml
+# Helm values for ArgoCD installation
+
+server:
+  replicas: 2
+  autoscaling:
+    enabled: true
+    minReplicas: 2
+    maxReplicas: 4
+  
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 250m
+      memory: 256Mi
+
+  ingress:
+    enabled: false
+  
+  extraArgs:
+    - --insecure
+
+controller:
+  replicas: 1
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 1024Mi
+    requests:
+      cpu: 500m
+      memory: 512Mi
+
+repoServer:
+  replicas: 2
+  autoscaling:
+    enabled: true
+    minReplicas: 2
+    maxReplicas: 4
+  
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 250m
+      memory: 256Mi
+
+dex:
+  enabled: false
+
+redis:
+  enabled: true
+  resources:
+    limits:
+      cpu: 200m
+      memory: 256Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+
+configs:
+  cm:
+    application.instanceLabelKey: argocd.argoproj.io/instance
+    
+  params:
+    server.insecure: true
+    
+  rbac:
+    policy.default: role:readonly

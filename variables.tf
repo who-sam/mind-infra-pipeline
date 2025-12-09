@@ -137,3 +137,36 @@ variable "tags" {
   default     = {}
 }
 
+
+# Add these variables to your existing variables.tf
+
+variable "grafana_admin_password" {
+  description = "Grafana admin password"
+  type        = string
+  sensitive   = true
+  default     = "ChangeMe123!"
+}
+
+variable "enable_argocd" {
+  description = "Enable ArgoCD installation"
+  type        = bool
+  default     = true
+}
+
+variable "enable_monitoring" {
+  description = "Enable monitoring stack installation"
+  type        = bool
+  default     = true
+}
+
+variable "argocd_namespace" {
+  description = "Namespace for ArgoCD"
+  type        = string
+  default     = "argocd"
+}
+
+variable "monitoring_namespace" {
+  description = "Namespace for monitoring stack"
+  type        = string
+  default     = "monitoring"
+}
