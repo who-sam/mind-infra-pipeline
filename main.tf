@@ -120,6 +120,49 @@ module "eks" {
   tags                      = var.tags
 }
 
+# ArgoCD Module
+module "argocd" {
+  source = "./modules/argocd"
+  
+  providers = {
+    kubernetes = kubernetes.eks
+    helm       = helm.eks
+  }
+  
+  argocd_namespace     = var.argocd_namespace
+  argocd_chart_version = var.argocd_chart_version
+  argocd_service_type  = var.argocd_service_type
+  project_name         = var.project_name
+  environment          = var.environment
+  
+  depends_on = [
+    module.eks,
+    kubernetes_config_map_v1_data.aws_auth
+  ]
+}
+
+# Install Monitoring Stack (Prometheus & Grafana)
+module "monitoring" {
+  source = "./modules/monitoring"
+  
+  providers = {
+    kubernetes = kubernetes.eks
+    helm       = helm.eks
+  }
+  
+  monitoring_namespace      = var.monitoring_namespace
+  app_namespace            = var.app_namespace
+  prometheus_chart_version = var.prometheus_chart_version
+  prometheus_retention     = var.prometheus_retention
+  prometheus_storage_size  = var.prometheus_storage_size
+  grafana_admin_password   = var.grafana_admin_password
+  grafana_service_type     = var.grafana_service_type
+  
+  depends_on = [
+    module.eks,
+    kubernetes_config_map_v1_data.aws_auth
+  ]
+}
 # ============================================================================
 # EKS CLUSTER DATA SOURCES
 # ============================================================================
@@ -226,51 +269,6 @@ resource "kubernetes_config_map_v1_data" "aws_auth" {
 # KUBERNETES APPLICATIONS
 # ============================================================================
 
-# Install ArgoCD
-module "argocd" {
-  source = "./modules/argocd"
-  
-  providers = {
-    kubernetes = kubernetes.eks
-    helm       = helm.eks
-  }
-  
-  argocd_namespace     = var.argocd_namespace
-  argocd_chart_version = var.argocd_chart_version
-  argocd_service_type  = var.argocd_service_type
-  project_name         = var.project_name
-  environment          = var.environment
-  
-  depends_on = [
-    module.eks,
-    kubernetes_config_map_v1_data.aws_auth
-  ]
-}
-
-# Install Monitoring Stack (Prometheus & Grafana)
-module "monitoring" {
-  source = "./modules/monitoring"
-  
-  providers = {
-    kubernetes = kubernetes.eks
-    helm       = helm.eks
-  }
-  
-  monitoring_namespace      = var.monitoring_namespace
-  app_namespace            = var.app_namespace
-  prometheus_chart_version = var.prometheus_chart_version
-  prometheus_retention     = var.prometheus_retention
-  prometheus_storage_size  = var.prometheus_storage_size
-  grafana_admin_password   = var.grafana_admin_password
-  grafana_service_type     = var.grafana_service_type
-  project_name             = var.project_name
-  environment              = var.environment
-  
-  depends_on = [
-    module.eks,
-    kubernetes_config_map_v1_data.aws_auth
-  ]
-}
 
 # ============================================================================
 # OUTPUTS
