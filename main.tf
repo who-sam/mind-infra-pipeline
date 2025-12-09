@@ -132,8 +132,6 @@ module "argocd" {
   argocd_namespace     = var.argocd_namespace
   argocd_chart_version = var.argocd_chart_version
   argocd_service_type  = var.argocd_service_type
-  project_name         = var.project_name
-  environment          = var.environment
   
   depends_on = [
     module.eks,
